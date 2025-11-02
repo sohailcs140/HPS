@@ -1,0 +1,74 @@
+{% extends "core1/base.html" %}
+{% load static %}
+{% block content %}
+{% include 'core1/includes/message.html' %}
+            <!-- Dises Section -->
+        <section class="symptomsSection profileSection">
+          <div class="container-fluid">
+            <div class="row symptomsRow">
+              <div class="col-12">
+                <div class="heading">
+                  <h5 class="title">User Information</h5>
+                  <hr />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="userDetails">
+                  <a href="{% url 'profileEdit' %}" class="editBtn"
+                    ><i class="fa fa-edit"></i
+                  ></a>
+                  <div class="row detailRow">
+                    <div class="col-lg-4 mb-5">
+                      <div class="fristName">
+                        <p class="text">Frist Name</p>
+                        <h5 class="value">{{request.user.first_name}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                      <div class="fristName">
+                        <p class="text">Last Name</p>
+                        <h5 class="value">{{request.user.last_name}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 mb-5">
+                      <div class="fristName">
+                        <p class="text">Age</p>
+                        <h5 class="value">{{request.user.profile.age}}</h5>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="fristName">
+                        <p class="text">Gender</p>
+                        <h5 class="value">
+                                {% if request.user.profile.gender == '0' %}FeMale {% endif %}
+                                {% if request.user.profile.gender == '1' %}Male {% endif %}
+                                {% if request.user.profile.gender == '2' %}Other {% endif %}
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 mt-lg-0 mt-4">
+                      <div class="fristName">
+                        <p class="text">Profile Picture</p>
+                       
+                      {% if  request.user.profile.picture %}
+                          <img src="{{user.profile.picture.url}}" class="img-fluid profilePicture" />
+                          {% else %}
+                          {% if request.user.socialaccount_set.all.0.get_avatar_url %}
+                            <img src="{{request.user.socialaccount_set.all.0.get_avatar_url}}" class="img-fluid profilePicture" />
+                          {% else %}
+                            <img src="{% static 'assets1/img/user.png' %}" class="img-fluid profilePicture" />
+                          {% endif %}
+                      {% endif %}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock content %}
+
+

@@ -1,0 +1,15 @@
+{% extends "core/errors/base.html" %}
+
+{% block title %}
+    Bad Request
+{% endblock title %}
+
+
+{% block name %}
+  400
+{% endblock name %}
+                
+
+{% block message %}
+  The request could not be understood or was missing required parameters.
+{% endblock message %}

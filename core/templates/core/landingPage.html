@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'assets/css/boot.css' %}" rel="stylesheet" >
+</head>
+
+
+<style>
+   .mainSection{
+    height:100vh;
+    background:#343541;
+}
+.mainContainer, .mainWraper{
+    height:100%;
+}
+.left{
+background:transfarent;
+position: relative;
+display:flex;
+justify-content:start;
+align-items:center;
+}
+
+.logo{
+    position:absolute;
+    font-weight:700;
+    font-size:3rem;
+    font-family:'Poppinse';
+    color:#D292FF;
+    top:0;
+    left:.5em;
+}
+.text{
+    font-size:2rem;
+    line-height:3rem;
+    font-weight:600;
+    font-family:poppinse;
+    color:#D292FF;
+    margin-left:.5rem;
+}
+.right{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#000000;
+}
+.right .content{
+    width:80%;
+    margin:0 auto;
+    text-align:center;
+    margin-bottom:3rem;
+}
+.btns{
+    display:flex;
+    justify-content:center;
+    gap:1em;
+}
+.login{
+    width:50%;
+}
+
+.right .btn{
+    background-color:#2E42D1;
+    width:100%;
+    color:white;
+    font-size:1rem;
+    font-weight:700;
+    padding:.7em;
+}
+.right .btn:hover{
+    color:white;
+    background-color:#0000FF;
+    
+}
+.right .btn:hover, .right .btn:focus{
+outline:none;
+box-shadow:none;
+}
+
+
+.right .content h2{
+    color:white;
+    font-size:2rem;
+    font-weight:700;
+    margin-bottom:1rem;
+}
+
+.signup{
+    width:50%;
+    
+}
+
+
+@media (max-width:760px) {
+    .right{
+        border-top-left-radius: 3rem;
+        border-top-right-radius: 3rem;
+    }
+}
+</style>
+<body>
+    <section class="mainSection">
+        <div class="container-fluid  mainContainer">
+            <div class="row mainWraper">
+                <div class="col-lg-7 col-md-6 left">
+                    <div class="logo">
+                        HPS
+                    </div>
+                    <div class="text" style="height:20vh">
+                        <p id="text" style="height:100%;">
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 right">
+                   <div class="content">
+                     <h2>Get started</h2>
+                        <div class="btns">
+                            <div class="login">
+                                <a href="{% url 'account_login' %}" class="btn bg-blue">Log in</a>
+                            </div>
+                            <div class="signup">
+                                <a href="{% url 'account_signup' %}" class="btn bg-blue">Sign up</a>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'assets/js/AutoTyping.js' %}"></script>
+    <script>
+          new AutoTyping({
+      id: 'text',
+      typeText: ['HPS', "Health Prediction System",
+  "In the realm of wellness, a health prediction system is a beacon of hope, illuminating our future well-being.",
+  "Like a skilled navigator, a health prediction system charts our course towards a healthier tomorrow.",
+  "It's the oracle of vitality, whispering insights into the secrets of our body's future.",
+  "With data as its canvas, a health prediction system paints a masterpiece of proactive care.",
+  "A symphony of algorithms, it harmonizes past health trends to compose a future of well-being.",
+  "Just as a crystal ball unveils destinies, a health prediction system unveils the path to a longer, healthier life.",
+  "It's the guardian angel of our health, alerting us to potential storms before they strike.",
+  "By gazing into the data's crystal-clear waters, it reveals ripples of future health events.",
+  "In the tapestry of life, a health prediction system weaves threads of prevention and early intervention.",
+  "It's the architect of wellness, laying the foundations for a vibrant and fulfilling life yet to come."],
+      textColor: '',
+      typeSpeed: 30,
+      typeRandom: false,
+      typeDelay: 300,
+      cursorColor: '',
+      cursorSpeed: 500,
+      deleteSpeed: 20,
+      deleteDelay: 2000,
+      typeInfinity: true
+    }).init();
+    </script>
+</body>
+</html>

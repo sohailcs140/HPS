@@ -1,0 +1,55 @@
+:root {
+  --navy: #26273c;
+  --yallow: #fdb916;
+  --gray: #9fa2ab;
+}
+
+/* .btn-success {
+  background-color: var(--navy);
+  border: var(--navy);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.disabled:hover,
+.btn-success.disabled:focus,
+.btn-success.disabled:active {
+  background-color: var(--navy) !important;
+  color: #fff !important;
+}
+
+.btn-warning {
+  background-color: var(--yallow);
+  border: var(--yallow);
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.disabled:hover,
+.btn-warning.disabled:focus,
+.btn-warning.disabled:active {
+  background-color: var(--yallow) !important;
+  color: #fff !important;
+}
+.main-sidebar .sidebar-menu .dropdown.current {
+  background-color: #2a2f3b !important;
+  color: green;
+} */
+
+::-webkit-scrollbar {
+            width: 10px; 
+        }
+
+        
+::-webkit-scrollbar-thumb {
+    background-color: #AAAAAA; 
+    border-radius: 5px; 
+  
+}
+
+::selection {
+  color: white;
+  background: #44B78B;
+}

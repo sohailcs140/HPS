@@ -1,0 +1,108 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% load hps_tags %}
+{% block content %}
+    <div class="main-content">
+    <section class="section">
+    <div class="row">
+        <div class="col-12">
+            {% include 'core/includes/message.html' %}
+        <div class="card">
+            <div class="card-header">
+        
+            <h4>Select Symptoms</h4>
+            </div>
+            <div class="card-body">
+            <form action="" class="form" method="post" 
+            hx-post="{% url 'predictionAdd' %}" hx-target="#answer" 
+            hx-swap="innerHTML" hx-indicator="#answerIndicator">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Symptoms</label>
+                    <select class="form-control select2" multiple name="symptoms" required>
+                        {% for symptom in symptoms %}
+                            <option value="{{symptom}}">{{symptom|getProperName|title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="action text-right">
+                <button class="btn btn-primary" type="submit">Predict</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+            <h4>Predicted Disease</h4>
+            </div>
+            
+                <div class="card-body">
+                     
+                    <div class="indicator" id="answerIndicator">
+                        <img src="{% static 'assets/img/formLoader.png' %}" alt="" srcset="">
+                    </div>
+
+                    <div id="answer">
+                        
+                        {% block output %}
+
+                         <h6 class="text-warning">
+                            {% if disease  %}{{disease}} {% else %} [Disease Name] {% endif %}
+                         </h6>
+                            <span id="outputText">
+                                Predicted Disease will be apear here
+                            </span>
+
+                            <p id="text" class="d-none">
+                                {% if message %}
+                                {{message}}
+                                {% else %}
+                                Predicted Disease will be apear here
+                                {% endif %}
+                            </p>
+
+                            <script>
+                                // Get the paragraph element
+                                var ansparagraph = document.getElementById("outputText");
+                                var textparagraph = document.getElementById("text");
+                                
+                                // Get the text content of the paragraph
+                                var text = textparagraph.textContent;
+                                
+                                // Clear the paragraph content
+                                ansparagraph.innerHTML = "";
+                                
+                                // Function to display characters one by one
+                                function displayCharacters() {
+                                    for (var i = 0; i < text.length; i++) {
+                                        setTimeout(function (char) {
+                                            return function () {
+                                                ansparagraph.innerHTML += char;
+                                            };
+                                        }(text[i]), i * 15); // Adjust the delay (in milliseconds) here
+                                    }
+                                }
+                                
+                                // Call the function to start displaying characters
+                                displayCharacters();
+
+
+
+                            </script>
+                        {% endblock output %}
+                            
+                    </div>
+                    
+                </div>
+            
+        </div>
+        </div>
+    </div>
+    </section>
+    </div>
+{% endblock content %}

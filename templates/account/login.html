@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_filters %}
+
+
+
+
+{% block title %}Login {% endblock title %}
+
+{% block content %}
+
+<style>
+  
+</style>
+
+
+
+
+<div class="container" style="height:100vh;">
+    <div class="row " style="height:100%">
+        <div class="col-9 col-md-5 col-lg-3 m-auto">
+            <h3 class="mb-5 text-center">Welcom Back</h3>
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="d-grid">
+             <button class="btn mainbtn" type="submit">{% trans "Continue" %}</button><br>
+             <div class="text-center" style="margin-top:-1rem; font-size:.9rem;">
+                <span>Don't have account please</span> 
+                <a class="button secondaryAction text-dark" href="{{ signup_url }}">sign up</a>
+             </div>
+             <a class="button mt-1 secondaryAction text-dark text-center" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          </div>
+        </form>
+           <div class="text-center">
+            {% get_providers as socialaccount_providers %}
+            <div class="login-or border-top border-bottom my-3 text-center">{% trans 'OR' %}</div>
+            {% if socialaccount_providers %}
+
+                <div class="socialaccount_ballot">
+
+                    <div class="socialaccount_providers">
+                        {% include "account/provider_list.html" with process="login" %}
+                    </div>
+                </div>
+                {% include "socialaccount/snippets/login_extra.html" %}
+
+            {% else %}
+            <p>{% blocktrans %}If you have not created an account yet, then please
+            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+            {% endif %}
+           </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("div_id_remember").parentElement.classList.add("d-none")
+</script>
+{% endblock content %}

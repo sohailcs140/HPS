@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- META TAGS -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- BOOTSTRAP -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- third party -->
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bundles/select2/dist/css/select2.min.css' %}"
+    />
+    
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'assets/bundles/izitoast/css/iziToast.min.css' %}"> 
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/components.css' %}" />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'assets1/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets1/css/resposive.css' %}" />
+
+
+    <title>{% block title %}HPS{% endblock title %}</title>
+
+<style>
+  .indicator{
+    display: none;
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+ 
+    justify-content:center;
+    align-items:center;
+  }
+  .indicator img{
+    animation: rotate360 .9s linear infinite;
+    
+  }
+  .result{
+    position: relative;
+    
+  }
+
+
+.htmx-request .indicator {
+  display: flex;
+     justify-content:center;
+    align-items:center;
+
+}
+
+.htmx-request.indicator ~ #answer{
+  background: #F0F7FF;
+  opacity: .5;
+}
+.htmx-request.indicator ~ #answer .indicator{
+  opacity: 1;
+  background-color: red;
+}
+
+.htmx-request.indicator{
+  display: flex;
+    justify-content:center;
+  align-items:center;
+}
+
+.result{
+  min-height: 15vh;
+}
+#answer{
+  padding:2rem;
+  min-height: 15vh;
+  box-sizing:border-box;
+}
+
+    @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+</style>
+
+
+
+
+  </head>
+
+  <body>
+    <!-- 
+    === HEADER SECTION ===
+    -->
+
+    <div class="bodyWrapper">
+      <!-- side menu -->
+      <div class="sideMenu" id="sideMenu">
+        <div class="sidebrand">
+          <img src="{% static 'assets1/img/HPS.png' %}" class="logo img-fluid" />
+        </div>
+
+        <div class="mobileUser">
+          <div class="details">
+            <div class="userImage">
+              {% if  request.user.profile.picture %}
+              <img src="{% static '{{user.profile.picture.url}}' %}" class="img-fluid" />
+              {% else %}
+               {% if request.user.socialaccount_set.all.0.get_avatar_url %}
+               <img src="{% static '{{request.user.socialaccount_set.all.0.get_avatar_url}}' %}" class="img-fluid" />
+              {% else %}
+               <img src="{% static 'assets1/img/user.png' %}" class="img-fluid" />
+               {% endif %}
+              {% endif %}
+            </div>
+            <div class="content">
+              <h5 class="username">Azmat</h5>
+              <p class="email">azmat@gmail.com</p>
+            </div>
+          </div>
+          <div class="closeMenu">
+            <a href="#" class="closeBtn" id="closeBtn"
+              ><i class="fa fa-xmark-circle"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="sideLinks">
+          <a href="{% url 'predictionAdd' %}" class="link {% if active == 'n' %}active{% endif %}">
+            <span class="icon"
+              ><i class="fa-solid fa-user-doctor"></i> New Predication</span
+            >
+          </a>
+          <a href="{% url 'predictionList' %}" class="link {% if active == 'h' %}active{% endif %}">
+            <span class="icon"
+              ><i class="fa-solid fa-code-compare"></i> History</span
+            >
+          </a>
+          <a href="{% url 'symptomsList' %}" class="link {% if active == 'as' %}active{% endif %}">
+            <span class="icon"
+              ><i class="fa-solid fa-virus-covid"></i> All Symptoms</span
+            >
+          </a>
+          <a href="{% url 'diseasesList' %}" class="link {% if active == 'ad' %}active{% endif %}">
+            <span class="icon"
+              ><i class="fa-solid fa-bed-pulse"></i> All Disesses</span
+            >
+          </a>
+        </div>
+      </div>
+
+      <!-- Content Section -->
+      <div class="mainContent">
+        <!-- navbar -->
+        <div class="headerSection">
+          <h2 class="pageTitle">
+            
+            {% block pageTitle %}
+              <i class="fa fa-user-doctor"></i>New Predication
+            {% endblock pageTitle %}
+              
+          </h2>
+          <div class="userDetail">
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                 {% if  request.user.profile.picture %}
+              <img src="{{request.user.profile.picture.url}}" class="img-fluid" />
+              {% else %}
+               {% if request.user.socialaccount_set.all.0.get_avatar_url %}
+               <img src="{{request.user.socialaccount_set.all.0.get_avatar_url}}" class="img-fluid" />
+              {% else %}
+               <img src="{% static 'assets1/img/user.png' %}" class="img-fluid" />
+               {% endif %}
+              {% endif %}
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'profile' %}"
+                    ><i class="fa fa-user"></i>View Profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'account_logout' %}"
+                    ><i class="fa fa-sign-out"></i>LogOut</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobileNav">
+          <div class="navBrand">
+            <img src="{% static './img/HPS-light.png' %}" class="img-fluid" />
+          </div>
+          <div class="mobileMenu">
+            <a href="#" id="menuBtn"><i class="fa fa-stream"></i></a>
+          </div>
+        </div>
+        
+        {% block content %}
+
+        {% endblock content %}
+      </div>
+    </div>
+
+    <!-- === SCRIPT FILES === -->
+
+    <!-- BOOTSTRAP -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+     <!-- General JS Scripts -->
+    <script src="{% static 'assets/js/app.min.js' %}"></script>
+  <script
+        src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+        crossorigin="anonymous"
+      ></script>
+
+    <!--Third party-->
+
+    <script src="{% static 'assets/bundles/select2/dist/js/select2.full.min.js' %}"></script>
+    
+  <!-- Template JS File -->
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+<script src="{% static 'assets1/js/main.js' %}"></script>
+
+  </body>
+</html>

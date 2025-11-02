@@ -1,0 +1,64 @@
+{% extends "core/base.html" %}
+{% load hps_tags %}
+{% block content %}
+        <div class="main-content">
+            <section class="section">
+                <div class="section-body">
+                    <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                        <div class="card-header">
+                            <h4>Prediction History</h4>
+                        </div>
+                        <div class="card-body">
+                            {% include 'core/includes/message.html' %}
+                            <div class="table-responsive">
+                            <table class="table table-hover" id="save-stage" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Disease</th>
+                                    <th>Symptoms</th>
+                                    <th>Create At</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                {% for prediction in predictions %}
+                                    
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{prediction.desease.name}}</td>
+                                        <td>
+                                            {% for symptom in prediction.symptoms.all %}
+                                                {{symptom.symptom.name|getProperName|title}},
+                                            {% endfor %}
+                                                
+                                        </td>
+                                        <td>{{prediction.createAt|timesince}} ago</td>
+                                        <td>
+                                            <a  href="{% url 'predictionDelete' prediction.id %}"  class="text-danger"><i class="fas fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if predictions %}
+                            <a href="{% url 'predictionDeleteAll' %}" class="btn btn-outline-danger">Clear all</a>
+                        {% endif %}    
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                    </div>
+                
+                </div>
+                
+            </section>
+            
+        </div>
+{% endblock content %}
+    

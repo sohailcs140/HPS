@@ -1,0 +1,17 @@
+{% load static %}
+<script src="{% static 'assets/bundles/izitoast/js/iziToast.min.js' %}"></script>
+{% if messages %}
+    
+    {% for message in messages %}
+      <script>
+          
+          iziToast.{{message.tags}}({
+            title: '{{message.tags}}',
+            message: '{{message}}',
+            position: 'topRight'
+          })
+
+      </script>
+    {% endfor %}
+  
+{% endif %}

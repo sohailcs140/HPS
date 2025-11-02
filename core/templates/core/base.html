@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <!-- blank.html  21 Nov 2019 03:54:41 GMT -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <title>{% block title %}Health Prediction System{% endblock title %}</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}" />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bundles/select2/dist/css/select2.min.css' %}"
+    />
+  
+
+     <link rel="stylesheet" href="{% static 'assets/bundles/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'assets/bundles/pretty-checkbox/pretty-checkbox.min.css' %}">
+    <script src="{% static 'assets/js/htmx.min.js' %}"></script>
+    
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/components.css' %}" />
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+  .indicator{
+    display: none;
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+ 
+    
+  }
+  .indicator img{
+    animation: rotate360 .9s linear infinite;
+    
+  }
+  #answer{
+    position: relative;
+  }
+
+
+.htmx-request .indicator {
+  display: flex;
+     justify-content:center;
+    align-items:center;
+
+}
+
+
+.htmx-request.indicator{
+  display: flex;
+    justify-content:center;
+  align-items:center;
+}
+
+#answer{
+  min-height: 15vh;
+}
+
+    @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+</style>
+
+
+  </head>
+
+  <body class="">
+
+    <div id="app">
+      <div class="main-wrapper main-wrapper-1">
+
+        <!--    NAVE BAR-->
+        <div class="navbar-bg"></div>
+        <nav class="navbar navbar-expand-lg main-navbar sticky">
+          <div class="form-inline mr-auto">
+            <ul class="navbar-nav mr-3">
+              <li>
+                <a
+                  href="#"
+                  data-toggle="sidebar"
+                  class="nav-link nav-link-lg collapse-btn"
+                >
+                  <i data-feather="sidebar"></i
+                ></a>
+              </li>
+              <li>
+                <a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                  <i data-feather="maximize"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <ul class="navbar-nav navbar-right">
+            <li>
+              <div class="pretty p-switch p-outline mt-3">
+                      <input type="checkbox" id="isDark">
+                      <div class="state p-success">
+                        <label>
+                           Dark
+                        </label>
+                      </div>
+                    </div>
+            </li>
+            <li class="dropdown">
+              <a
+                href="#"
+                data-toggle="dropdown"
+                class="nav-link dropdown-toggle nav-link-lg nav-link-user"
+              >
+
+              {% if  request.user.profile.picture %}
+                <img
+                  alt="image"
+                  src="{{user.profile.picture.url}}"
+                  class="user-img-radious-style" />
+                  {% else %}
+
+                  {% if request.user.socialaccount_set.all.0.get_avatar_url %}
+                          <img class="user-img-radious-style" src="{{ request.user.socialaccount_set.all.0.get_avatar_url }}" alt="{{ request.user.username }}'s Profile Picture">
+                  {% else %}
+                  <img
+                  alt="image"
+                  src="{% static 'assets/img/users/profile.jpg' %}"
+                  class="user-img-radious-style" />
+                  {% endif %}
+              {% endif %}
+
+
+
+
+                <span class="d-sm-none d-lg-inline-block"></span
+              ></a>
+              <div class="dropdown-menu dropdown-menu-right pullDown">
+                <div class="dropdown-title">User Name</div>
+
+                <a href="{% url 'profile' %}" class="dropdown-item has-icon"> <i class="far
+										fa-user"></i> Profile
+              </a>
+
+
+                <a
+                  href="{% url 'account_logout' %}"
+                  class="dropdown-item has-icon text-danger"
+                >
+                  <i class="fas fa-sign-out-alt"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!--      SIDE BAR-->
+        <div class="main-sidebar">
+          <aside id="sidebar-wrapper">
+            <div class="sidebar-brand w-100">
+              <a href="{% url 'predictionAdd' %}">
+                <img
+                  alt="image"
+                  src="{% static 'assets/img/logo.png' %}"
+                  class="header-logo"
+                  id="logo"
+                />
+                
+              </a>
+            </div>
+            <ul class="sidebar-menu">
+              <li class="menu-header">Main</li>
+              <li class="dropdown current">
+                <a href="{% url 'predictionAdd' %}" class="nav-link"
+                  ><i data-feather="plus-circle"></i
+                  ><span>New Prediction</span></a
+                >
+              </li>
+
+              <li class="dropdown">
+                <a href="{% url 'predictionList' %}" class="nav-link"
+                  ><i data-feather="hard-drive"></i><span>History</span></a
+                >
+              </li>
+
+               <li class="dropdown">
+                <a href="{% url 'symptomsList' %}" class="nav-link"
+                  ><i data-feather="wind"></i><span>All Symptoms</span></a
+                >
+              </li>
+
+                <li class="dropdown">
+                <a href="{% url 'diseasesList' %}" class="nav-link"
+                  ><i data-feather="alert-octagon"></i><span>All Diseases</span></a
+                >
+              </li>
+
+              <!-- <li class="dropdown">
+                <a href="index.html" class="nav-link"
+                  >
+                  <img src="{% static './assets/img/disease.png' %}" alt="" class="img-fluid mr-2">
+                  <span>All Deseases</span></a
+                >
+              </li> -->
+            </ul>
+          </aside>
+        </div>
+        <!-- Main Content -->
+                  
+        {% block content %}
+
+        {% endblock content %}
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+      integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- General JS Scripts -->
+    <script src="{% static 'assets/js/app.min.js' %}"></script>
+    <!-- JS Libraies -->
+    <script src="{% static 'assets/bundles/select2/dist/js/select2.full.min.js' %}"></script>
+    <!-- Page Specific JS File -->
+    <script src="{% static 'assets/bundles/datatables/datatables.min.js' %}"></script>
+    <script src="{% static 'assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/bundles/jquery-ui/jquery-ui.min.js' %}"></script>
+    <!-- Page Specific JS File -->
+    <script src="{% static 'assets/js/page/datatables.js' %}"></script>
+
+    <!-- Template JS File -->
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+    <!-- Custom JS File -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+  </body>
+</html>

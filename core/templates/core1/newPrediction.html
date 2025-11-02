@@ -1,0 +1,103 @@
+{% extends "core1/base.html" %}
+{% load static %}
+{% load hps_tags %}
+
+{% block content %}
+{% include 'core1/includes/message.html' %}
+
+        <section class="symptomsSection">
+          <div class="container-fluid">
+            <div class="row symptomsRow">
+              <div class="col-12">
+                <div class="heading">
+                  <h5 class="title">Select Symptoms</h5>
+                  <hr />
+                </div>
+                <div class="input-group">
+                  <div class="symInput">
+                    <form action="" class="form" method="post" 
+            hx-post="{% url 'predictionAdd' %}" hx-target="#answer" 
+            hx-swap="innerHTML" hx-indicator="#answerIndicator">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Symptoms</label>
+                    <select class="form-control select2" multiple name="symptoms" required>
+                        {% for symptom in symptoms %}
+                            <option value="{{symptom}}">{{symptom|getProperName|title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                  <div class="formBtn">
+                    <button type="submit" class="mainBtn">
+                      Predicat <i class="fa fa-arrow-alt-circle-right"></i>
+                    </button>
+                  </div>
+            </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="predictedSection">
+          <div class="container-fluid">
+            <div class="row preRow">
+              <div class="col-12">
+                <div class="preContent">
+                  <h3 class="title">Predicted Disease</h3>
+                  <!-- <hr /> -->
+
+                  <div class="result">
+                     <div class="indicator" id="answerIndicator">
+                    <img src="{% static 'assets/img/formLoader.png' %}" alt="" srcset="">
+                     </div>
+                    <div id="answer">
+
+                      {% block output %}
+                    <h5 class="resultTitle">
+                      {% if disease  %}{{disease}} {% else %} [Disease Name] {% endif %}
+                    </h5>
+                    <p class="text" id="outputText">
+                    Predicted Disease will be apear here
+                    </p>
+
+                    <p id="text" class="d-none">
+                        {% if message %}
+                        {{message}}
+                        {% else %}
+                        Predicted Disease will be apear here
+                        {% endif %}
+                    </p>
+                    </div>
+                    <script>
+                        var ansparagraph = document.getElementById("outputText");
+                        var textparagraph = document.getElementById("text");
+                        
+                        var text = textparagraph.textContent;
+                        
+                        ansparagraph.innerHTML = "";
+                        
+                        function displayCharacters() {
+                            for (var i = 0; i < text.length; i++) {
+                                setTimeout(function (char) {
+                                    return function () {
+                                        ansparagraph.innerHTML += char;
+                                    };
+                                }(text[i]), i * 15); 
+                            }
+                        }
+                        
+                        displayCharacters();
+
+                    </script>
+                    {% endblock output %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+{% endblock content %}
+    

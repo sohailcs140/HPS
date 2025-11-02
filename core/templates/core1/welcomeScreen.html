@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- META TAGS -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- BOOTSTRAP -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'assets1/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets1/css/resposive.css' %}" />
+
+    <title>HSM</title>
+  </head>
+
+  <body>
+    <div class="registerSection welcomeSection">
+      <div class="registerImage welcomeImage">
+        <img src="{% static 'assets1/img/HPS.png' %}" class="img-fluid" />
+        <h5 class="text" id="text">
+        </h5>
+      </div>
+      <div class="registerForm">
+        <div class="welcomeContent">
+          <h3 class="title">Welcome to Health Prediction System</h3>
+
+        </div>
+
+        <div class="submitBtn">
+          <a href="{% url 'account_signup' %}" class="mainBtn me-3">
+            Register <i class="fa fa-arrow-right"></i>
+          </a>
+          <a href="{% url 'account_login' %}" class="mainBtn">
+            Login <i class="fa fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- === SCRIPT FILES === -->
+
+    <!-- BOOTSTRAP -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- CUSTOM SCRIPT -->
+    <script src="{% static 'assets1/js/main.js' %}"></script>
+
+    <script src="{% static 'assets/js/AutoTyping.js' %}"></script>
+    <script>
+          new AutoTyping({
+      id: 'text',
+      typeText: ['HPS', "Health Prediction System",
+  "In the realm of wellness, a health prediction system is a beacon of hope, illuminating our future well-being.",
+  "Like a skilled navigator, a health prediction system charts our course towards a healthier tomorrow.",
+  "It's the oracle of vitality, whispering insights into the secrets of our body's future.",
+  "With data as its canvas, a health prediction system paints a masterpiece of proactive care.",
+  "A symphony of algorithms, it harmonizes past health trends to compose a future of well-being.",
+  "Just as a crystal ball unveils destinies, a health prediction system unveils the path to a longer, healthier life.",
+  "It's the guardian angel of our health, alerting us to potential storms before they strike.",
+  "By gazing into the data's crystal-clear waters, it reveals ripples of future health events.",
+  "In the tapestry of life, a health prediction system weaves threads of prevention and early intervention.",
+  "It's the architect of wellness, laying the foundations for a vibrant and fulfilling life yet to come."],
+      textColor: '',
+      typeSpeed: 50,
+      typeRandom: false,
+      typeDelay: 300,
+      cursorColor: '',
+      cursorSpeed: 500,
+      deleteSpeed: 20,
+      deleteDelay: 2000,
+      typeInfinity: true
+    }).init();
+    </script>
+  </body>
+</html>

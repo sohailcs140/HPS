@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+  <head>
+    <!-- META TAGS -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- BOOTSTRAP -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{% static 'assets1/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets1/css/resposive.css' %}" />
+
+    <title>Sing Up</title>
+  </head>
+
+  <body>
+    <div class="registerSection">
+      <div class="registerImage">
+        <img src="{% static 'assets1/img/HPS.png' %}" class="img-fluid" />
+      </div>
+      <div class="registerForm">
+        <div class="heading">
+          <h4 class="title"><i class="fa fa-users"></i>Register Yourself</h4>
+          <p class="text">Please enter the correct information</p>
+        </div>
+        <form  class="input-group" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          <div class="formInput">
+           {{form.username|as_crispy_field}}
+          </div>
+          <div class="formInput">
+            {{form.email|as_crispy_field}}
+          </div>
+          <div class="formInput">
+            {{form.password1|as_crispy_field}}
+          </div>
+          <div class="formInput">
+             {{form.password2|as_crispy_field}}
+          </div>
+
+          <div class="submitBtn">
+            <button type="submit" class="mainBtn">
+              Register <i class="fa fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <a href="{% url 'account_login' %}" class="account">Already have account?</a>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- === SCRIPT FILES === -->
+
+    <!-- BOOTSTRAP -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- CUSTOM SCRIPT -->
+    <script src="{% static 'assest1/js/main.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+            <!-- Dises Section -->
+       {% load hps_tags %}
+       <div id="MDI">
+            <section class="symptomsSection">
+          <div class="container-fluid">
+            <div class="row symptomsRow">
+              <div class="col-12">
+                <div class="heading">
+                  <h5 class="title">Predication History</h5>
+                  <hr />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="historyTable table-responsive" >
+                    {% include 'core1/includes/message.html' %}
+
+                  <table class="table">
+                    
+                    <thead>
+                      
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Disease</th>
+                        <th scope="col">Symptom</th>
+                        <th scope="col">Create At</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      
+                      {% for prediction in predictions %}
+                      <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                          
+                          {% if forloop.counter|divisibleby:2 %}
+                          <span class="badge bg-primary">{{prediction.desease.name}}</span>
+                            {% else %}
+                            {% if forloop.counter|divisibleby:3 %}
+                          <span class="badge bg-success">{{prediction.desease.name}}</span>
+                           {% else %}
+                           {% if forloop.counter|divisibleby:forloop.counter %}
+                          <span class="badge bg-warning">{{prediction.desease.name}}</span>
+                           {% else %}
+                          <span class="badge bg-secondary">{{prediction.desease.name}}</span>
+                          {% endif %}
+                            {% endif %}
+                          {% endif %}
+                          
+                        </td>
+                        <td>
+                           {% for symptom in prediction.symptoms.all %}
+                                                {{symptom.symptom.name|getProperName|title}},
+                                            {% endfor %}
+                        </td>
+                        <td>{{prediction.createAt|timesince}} ago</td>
+                        <td>
+                          <a href="" class="tableBtn deleteBtn"
+                          hx-get="{% url 'predictionDelete' prediction.id %}"
+                          hx-target="#MDI"
+                          
+                            ><i class="fa fa-trash"></i
+                          ></a>
+                          
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                   <button class="btn btn-sm  btn-outline-warning " hx-target="#MDI" hx-get="{% url 'predictionDeleteAll' %}"  hx-confirm="Are you sure to delete all records">Clear All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+                 
+
+        </section>
+        </div>
